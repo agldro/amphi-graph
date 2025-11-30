@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio amphi-graph</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <!-- Background images for smooth fade -->
+    <div id="backgroundContainer">
+      <div class="bg-wrapper">
+        <button class="project-btn" id="projectButton" aria-expanded="false">
+        <h2> System Error</h2>
+        </button>
+       <div class="img-container">
+       <button class="gallery-arrow left">←</button>
+       <img id="bgImage" class="bg-img"/>
+       <button class="gallery-arrow right">→</button>
+       </div>
+      </div>
+      <div class="mobile-description" id="mobileInfo"></div>
+    </div>
+
+    <!-- HEADER -->
+    <header id="mainHeader">
+      <div id="brandGroup">
+        <h1 class="brand-part" id="brand-left">amphi-</h1>
+        <h1 class="brand-part" id="brand-right">-graph</h1>
+      </div>
+    </header>
+
+    <!-- Carousel buttons -->
+    <button class="carousel-btn left" type="button" aria-label="Previous image">
+      <span class="nav-text">Previous</span>
+    </button>
+    <button class="carousel-btn right" type="button" aria-label="Next image">
+      <span class="nav-text">Next</span>
+    </button>
+
+    <!-- Bottom info button -->
+    <button class="info-btn" id="infoButton" aria-expanded="false" aria-controls="infoPanel" aria-label="Information">
+    About
+    </button>
+
+    <!-- Bottom info panel -->
+    <div class="bottom-panel" id="infoPanel" aria-hidden="true" role="dialog" aria-label="Information panel">
+      <div class="bottom-panel__content">
+        <div class="bottom-panel__body">
+          <div class="column">
+            <p><span class="underlined"> &nbsp;&nbsp;&nbsp;&nbsp; amphi-graph</span> is a graphic and interactive design studio, 
+              an ongoing collaboration between <a href="https://aglaya-drobysheva.me" target="_blank" rel="noopener noreferrer">Aglaya Drobysheva</a> and
+               <a href="https://www.tabithaskye.com" target="_blank" rel="noopener noreferrer">Tabitha Anderton.</a><br></p>
+          </div>
+          <div class="column">
+            <p>It is a space for exploration, creation, and friction,
+              spanning from publications to interactive experiences,
+              from socio-political questions to material investigations.</p>
+          </div>
+          <div class="column">
+            <p>Based in Arnhem, the Netherlands<br><a href="mailto:info@amphi-graph.com">info@amphi-graph.com</a>
+              <br><a href="https://www.instagram.com/amphi_graph/" target="_blank" rel="noopener noreferrer">@amphi_graph</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Side Panel (text info) -->
+    <div class="side-panel" id="sidePanel" aria-hidden="true">
+    <h1 class="brand-part side-brand" id="tagline">amphi- &nbsp; -graph</h1>
+    <div class="side-panel-content" id="sidePanelContent"></div>
+    </div>
+
+    <div id="custom-cursor"></div>
+
+<script>
+(function() {
+
+  const projects = [
+    {
+      title: "System Error",
+      mainImage: "Images/PDA_images/IMG_8482.JPG",
+      navColor: "black",
+            info: `
+        <p> <span class="project-title">System Error</span><br>
+        <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Product Design Arnhem </span><br> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Graduation Exhibition 2025 </span></p>
+        <p>What if the systems we live within — social, technological, political — aren’t working the way they should?
+        The identity of the exhibition and catalogue design was based on the metaphor of a desire path,
+        which holds the potential to transform the predefined systems around us.</p>
+        <p>
+          <br><br><span class="category">Specifications</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Japanese fold </span><br>
+          <span class="category">Typefaces</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp;  Futura, Syne Tactile, Syne Mono</span><br>
+          <span class="category">Paper</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Holmen TRND, Crush Corn </span><br>
+          <span class="category">Design supervision</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Jeremy Jansen </span><br>
+          <span class="category">Photography</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Tabitha Anderton, Aglaya Drobysheva, Karel Haans, Pelle van Loon</span><br>
+          <span class="category">Introduction essay</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Roel Griffioen</span><br>
+          <span class="category">Proofreading</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Frank Kolkman </span><br>
+          <span class="category">Printing</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Holmen TRND, Crush Corn </span>
+        </p>
+      `,
+      gallery: [
+        "Images/PDA_images/IMG_8482.JPG",
+        "Images/PDA_images/IMG_8536.JPG",
+        "Images/PDA_images/IMG_8488.JPG",
+        "Images/PDA_images/IMG_8688.JPG",
+        "Images/PDA_images/IMG_8624.JPG",
+        "Images/PDA_images/IMG_8554.JPG",
+        "Images/PDA_images/IMG_8504.JPG",
+        "Images/PDA_images/IMG_8608.JPG",
+        "Images/PDA_images/IMG_8470.JPG",
+        "Images/PDA_images/IMG_8725.JPG",
+        "Images/PDA_images/IMG_8550.JPG",
+        "Images/PDA_images/IMG_8655.JPG",
+        "Images/PDA_images/IMG_8618.JPG",
+        "Images/PDA_images/IMG_8659.JPG"
+      ]
+    },
+    {
+      title: "(Un)veiled Force",
+      mainImage: "Images/unveiled_force/7M4A7479.JPG",
+      navColor: "white",
+            info: `
+        <p><span class="project-title">(Un)veiled Force</span><br>
+        <span class="underlined"> &nbsp;&nbsp;&nbsp;&nbsp; The Narratives of Violence</span></p>
+        <p>(Un)veiled Force: The Narratives of Violence is a 
+          collaborative book project featuring a selection of 
+          E-flux Criticism articles. The book explores concepts 
+          of violence, ignorance, and censorship. Each article page 
+          is preceded by a thicker page with cutouts that frame only 
+          a few specific words from the next page. Detached from their 
+          context, they mislead the reader from the original meaning 
+          of the article. While trying to hide the truth about the 
+          violence, the book still leaves the reader the space for a choice: 
+          to look closer to the faded white ink, not to trust the isolated 
+          words, to reveal the underlayer. The reader can choose not to 
+          ignore the narrative of violence. </p>
+
+          <p><br><br><span class="category">Specifications</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; RISO-printed in white and purple, Laser-cutted, binded with a zip tie </span> <br>
+          <span class="category">Typefaces</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Avara, Helvetica Neue </span> <br>
+          <span class="category">Paper</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Biotop 80gr, Biotop 250gr, <br> Curious Matter </span><br>
+          <span class="category">Design</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Tabitha Anderton, Aglaya Drobysheva, Carla Sanfrantello Marco</span></p>
+      `,
+      gallery: [
+        "Images/unveiled_force/7M4A7479.JPG",
+        "Images/unveiled_force/7M4A5544.JPG",
+        "Images/unveiled_force/7M4A5392.JPG",
+        "Images/unveiled_force/7M4A5386.JPG",
+        "Images/unveiled_force/7M4A5376.JPG",
+        "Images/unveiled_force/7M4A5454.JPG",
+        "Images/unveiled_force/7M4A7465.JPG",
+        "Images/unveiled_force/7M4A7505.JPG",
+        "Images/unveiled_force/7M4A7511.JPG",
+        "Images/unveiled_force/7M4A7476.JPG",
+        "Images/unveiled_force/7M4A5421.JPG",
+        "Images/unveiled_force/7M4A5412.JPG",
+        "Images/unveiled_force/7M4A5447.JPG",
+        "Images/unveiled_force/7M4A5555.JPG",
+        "Images/unveiled_force/7M4A5628.JPG",
+        "Images/unveiled_force/7M4A7470.JPG"
+      ]
+    }
+  ];
+
+    /* ---------------- ELEMENTS ---------------- */
+  const bgImage = document.getElementById('bgImage');
+  const projectBtn = document.getElementById('projectButton');
+  const sidePanel = document.getElementById('sidePanel');
+  const sidePanelContent = document.getElementById('sidePanelContent');
+  const header = document.getElementById('mainHeader');
+
+  const galleryLeft = document.querySelector('#backgroundContainer .gallery-arrow.left');
+  const galleryRight = document.querySelector('#backgroundContainer .gallery-arrow.right');
+
+  const leftBtn = document.querySelector('.carousel-btn.left');
+  const rightBtn = document.querySelector('.carousel-btn.right');
+
+  /* ---------------- STATE ---------------- */
+  let index = 0;          // current project
+  let galleryIndex = 0;   // current image in gallery
+  let galleryMode = false;
+
+  // Preload gallery images
+  projects.forEach(p => p.gallery.forEach(src => { const i = new Image(); i.src = src; }));
+
+  /* ---------------- UPDATE DISPLAY ---------------- */
+
+  const mobileInfo = document.getElementById('mobileInfo');
+
+function isMobile() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
+  function updateDisplay() {
+    const project = projects[index];
+    const images = galleryMode ? project.gallery : [project.mainImage];
+    galleryIndex = Math.max(0, Math.min(galleryIndex, images.length - 1));
+    bgImage.src = images[galleryIndex];
+
+    // Update the project button title
+    projectBtn.querySelector('h2').textContent = project.title;
+
+  if (isMobile()) {
+  mobileInfo.innerHTML = project.info;   // Always visible on mobile
+} else if (sidePanel.classList.contains('open')) {
+  sidePanelContent.innerHTML = project.info; // Desktop
+}
+  }
+
+  /* ---------------- GALLERY NAVIGATION ---------------- */
+  function nextGallery() {
+    if (!galleryMode) return;
+    const images = projects[index].gallery;
+    galleryIndex = (galleryIndex + 1) % images.length;
+    updateDisplay();
+  }
+
+  function prevGallery() {
+    if (!galleryMode) return;
+    const images = projects[index].gallery;
+    galleryIndex = (galleryIndex - 1 + images.length) % images.length;
+    updateDisplay();
+  }
+
+  galleryLeft.addEventListener('click', e => {
+    e.stopPropagation();
+    if (isMobile()) {
+      // Always show gallery images on mobile
+      const images = projects[index].gallery;
+      galleryIndex = (galleryIndex - 1 + images.length) % images.length;
+      bgImage.src = images[galleryIndex];
+    } else {
+      prevGallery();
+    }
+  });
+
+  galleryRight.addEventListener('click', e => {
+    e.stopPropagation();
+    if (isMobile()) {
+      // Always show gallery images on mobile
+      const images = projects[index].gallery;
+      galleryIndex = (galleryIndex + 1) % images.length;
+      bgImage.src = images[galleryIndex];
+    } else {
+      nextGallery();
+    }
+  });
+
+  /* ---------------- PROJECT NAVIGATION ---------------- */
+  function nextProject() {
+    index = (index + 1) % projects.length;
+    galleryIndex = 0;
+    updateDisplay();
+  }
+
+  function prevProject() {
+    index = (index - 1 + projects.length) % projects.length;
+    galleryIndex = 0;
+    updateDisplay();
+  }
+
+  leftBtn.addEventListener('click', prevProject);
+  rightBtn.addEventListener('click', nextProject);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') prevProject();
+    if (e.key === 'ArrowRight') nextProject();
+    if (e.key === 'Escape') closePanel();
+  });
+
+  /* ---------------- PANEL BEHAVIOR ---------------- */
+  function openPanel() {
+    if (isMobile()) return;
+    galleryMode = true;
+    galleryLeft.style.display = "flex";
+    galleryRight.style.display = "flex";
+    document.getElementById("backgroundContainer").classList.add("shifted");
+    sidePanel.classList.add('open');
+    header.classList.add('minimized', 'instant');
+    updateDisplay();
+  }
+
+  function closePanel() {
+    if (isMobile()) return;
+    galleryMode = false;
+    galleryLeft.style.display = "none";
+    galleryRight.style.display = "none";
+    document.getElementById("backgroundContainer").classList.remove("shifted");
+    sidePanel.classList.remove('open');
+    header.classList.remove('minimized', 'instant');
+    galleryIndex = 0;
+    updateDisplay();
+  }
+
+ projectBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  if (!isMobile()) {
+    sidePanel.classList.contains('open') ? closePanel() : openPanel();
+  }
+});
+
+  document.addEventListener('click', e => {
+    if (sidePanel.classList.contains('open') &&
+        !sidePanel.contains(e.target) &&
+        !projectBtn.contains(e.target) &&
+        !e.target.closest('.carousel-btn')) closePanel();
+  });
+
+  /* ---------------- INITIALIZE ---------------- */
+  updateDisplay();
+
+})();
+
+const infoButton = document.getElementById('infoButton');
+const infoPanel = document.getElementById('infoPanel');
+const bgWrapper = document.querySelector('.bg-wrapper');
+
+infoButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = infoPanel.classList.contains('open');
+    infoPanel.classList.toggle('open', !isOpen);
+    infoButton.setAttribute('aria-expanded', !isOpen);
+    bgWrapper.classList.toggle('shifted-up', !isOpen); // move image up
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+    if (infoPanel.classList.contains('open') &&
+        !infoPanel.contains(e.target) &&
+        !infoButton.contains(e.target) &&
+        !e.target.closest('.carousel-btn')) { // ignore carousel buttons
+        infoPanel.classList.remove('open');
+        infoButton.setAttribute('aria-expanded', false);
+        bgWrapper.classList.remove('shifted-up'); // move image back down
+    }
+});
+
+
+document.addEventListener('mousemove', e => {
+  const cursor = document.getElementById('custom-cursor');
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+// Add scale on hover for clickable elements
+document.querySelectorAll('button, a, .carousel-btn, .info-btn, .gallery-arrow, .bottom-panel__close')
+  .forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      document.getElementById('custom-cursor').classList.add('big');
+    });
+    el.addEventListener('mouseleave', () => {
+      document.getElementById('custom-cursor').classList.remove('big');
+    });
+  });
+
+window.addEventListener("DOMContentLoaded", () => {
+    const left = document.getElementById("brand-left");
+    const right = document.getElementById("brand-right");
+
+    // Total available space from center to screen edge
+    const screenCenter = window.innerWidth / 2;
+
+    // Each word’s width
+    const leftWidth = left.offsetWidth;
+    const rightWidth = right.offsetWidth;
+
+    // Calculate max safe shift so elements remain fully visible
+    const maxShift = screenCenter - Math.max(leftWidth, rightWidth) - 20; 
+    // the "-20" gives a small breathing margin
+
+    document.documentElement.style.setProperty("--brand-shift", `${maxShift}px`);
+    document.body.classList.add("brand-loaded");
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  // Allow 1 frame delay so initial state is applied
+  requestAnimationFrame(() => {
+    document.body.classList.add("brand-loaded");
+  });
+});
+
+window.addEventListener("resize", () => {
+    const left = document.getElementById("brand-left");
+    const right = document.getElementById("brand-right");
+
+    const screenCenter = window.innerWidth / 2;
+    const leftWidth = left.offsetWidth;
+    const rightWidth = right.offsetWidth;
+
+    const maxShift = screenCenter - Math.max(leftWidth, rightWidth) - 20;
+
+    document.documentElement.style.setProperty("--brand-shift", `${maxShift}px`);
+});
+</script>
+  </body>
+</html>

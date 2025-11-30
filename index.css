@@ -1,0 +1,609 @@
+@font-face {
+  font-family: "Tuplet_italic";
+  src: url("Fonts/Tuplet_italic.woff2") format("woff2"),
+       url("Fonts/Tuplet_italic.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura";
+  src: url("Fonts/Futura-Book.woff2") format("woff2"),
+       url("Fonts/Futura-Book.woff") format("woff");
+  font-weight: 400;
+  font-style: light;
+  font-display: swap;
+}
+
+a {
+  color: black;
+}
+
+
+@media (max-width: 450px) {
+
+  body{
+    width: 100%;
+  }
+
+    #custom-cursor {
+    display: none !important;
+  }
+
+.brand-part {
+  font-size: 5vh !important;
+}
+
+  .carousel-btn {
+    padding: 0vw 4vw !important;
+  }
+
+#brandGroup {
+  position: absolute;
+  top: 5vh;
+  left: 5vw !important;
+  transform: none !important;
+  width: 100% !important;
+  display: flex;
+  justify-content: space-between !important;
+  transition: none !important;
+}
+
+#brand-left,
+#brand-right {
+  width: 100% !important;
+  transition: none !important;
+}
+
+.bg-wrapper {
+  position: absolute !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 auto;
+  transition: transform 0.3s ease; /* default easing when opening */
+}
+
+#backgroundContainer {
+  position: absolute !important;
+  inset: 0;
+  width: 100%;
+  overflow: hidden;
+  transition: transform 0.6s ease;
+}
+
+.bg-img {
+  width: 80% !important;
+}
+
+.img-container{
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 25vw;
+}
+
+.project-btn {
+display: none !important;
+}
+
+.side-panel {
+  display: none;
+}
+
+body.loaded #brand-left {
+  transform: none !important;  /* move left */
+}
+
+body.loaded #brand-right {
+  transform: none !important;   /* move right */
+}
+
+.mobile-description{
+    display: block !important;
+    position: absolute;
+    top: 45vh;           /* adjust as needed for your layout */
+    left: 0;
+    padding: 0 5vw;
+    column-count: 2;
+    column-gap: 2vw;
+    z-index: 100;
+    background: transparent;
+    font-size: 1vh !important;;
+}
+
+  #brandGroup {
+    position: relative !important;
+    top: 2vh !important;
+    left: 0 !important;
+    width: 100vw !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 0 2vw !important;
+    transform: none !important;
+    gap: 0 !important;
+  }
+  #brand-left,
+  #brand-right {
+    font-size: 5vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+    transform: none !important;
+    position: static !important;
+  }
+
+   .gallery-arrow {
+    display: flex !important;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2vh;
+    position: absolute;
+    top: 50%;
+    /* Adjust left/right as needed for your layout */
+  }
+  .gallery-arrow.left {
+    left: 1vw !important;
+    padding: 0 1vw;
+  }
+  .gallery-arrow.right {
+    right: 1vw !important;
+    padding: 0 1vw;
+  }
+
+    .bottom-panel {
+    height: auto;
+    min-height: 20vh;
+    padding: 2vw;
+  }
+ 
+  .bottom-panel__body {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2vw !important;
+    font-size: 2vh !important;
+  }
+  .bottom-panel__body .column {
+    max-width: 100% !important;
+    flex: 1 1 50% !important;
+    display: block !important;
+    margin-bottom: 2vh !important;
+  }
+
+}
+
+.mobile-description{
+display: none;
+}
+
+.underlined{
+  text-decoration: underline;
+}
+
+.category{
+  font-size: 1.5vh;
+}
+
+p{
+  font-size: 1.8vh;
+}
+
+/* ---------- GLOBAL ---------- */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #000;
+  overflow-x: hidden;
+}
+
+/* ---------- BACKGROUND FADE ---------- */
+#backgroundContainer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;      /* center vertically */
+  overflow: hidden;
+  transition: transform 0.6s ease;
+  padding-bottom: 2vh;
+}
+
+#backgroundContainer.shifted {
+  transform: translateX(12vw); 
+}
+
+.bg-img {
+  position: static;
+  margin: 0;
+  inset: 0;
+  width: 50vw;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border: 1.5px dashed black; 
+  transition: none;
+}
+
+.img-container {
+  position: relative;     /* makes this the anchor */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-wrapper {
+  position: relative;
+  width: 52vw;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease; /* default easing when opening */
+}
+
+.bg-wrapper.shifted-up {
+  transform: translateY(-8.5vh);
+  transition: transform 0.3s ease-out; /* ease-out when closing */
+}
+
+/* ---------- HEADER ---------- */
+header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2vw;
+  z-index: 100;
+}
+
+.brand-part {
+  font-family: "Tuplet_italic", system-ui, sans-serif;
+  font-weight: 400;
+  color: black;
+  margin: 0;
+  padding: 0 2vw;
+}
+
+#brandGroup {
+  position: absolute;
+  top: 2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 2vw;
+  flex-wrap: nowrap;
+}
+
+
+/* Text parts initially sit together in the center */
+#brand-left,
+#brand-right {
+  transition: transform 2s ease;
+  position: relative;
+  white-space: nowrap;   /* never wrap */
+  overflow: hidden;      /* prevent spilling */
+  text-overflow: ellipsis; /* optional, avoids ugly clipping */
+  max-width: 100vw;  
+  font-size: clamp(1rem, 7vh, 5rem);
+}
+
+#brand-right{
+  text-align: right;
+  padding-right: 2.2vw;
+}
+
+#brand-left{
+  text-align: right;
+  padding-left: 2.2vw;
+}
+
+#brand-left,
+#brand-right {
+  opacity: 0;
+  transform: translateX(0);  /* start together */
+  transition:
+    opacity 0.8s ease-in-out,
+    transform 1.4s ease-in-out;
+}
+
+/* After page load */
+body.brand-loaded #brand-left,
+body.brand-loaded #brand-right {
+  opacity: 1; /* fade in */
+}
+
+/* Move outward after appearing */
+body.brand-loaded #brand-left {
+  transform: translateX(calc(var(--brand-shift, 0px) * -1));
+}
+
+body.brand-loaded #brand-right {
+  transform: translateX(var(--brand-shift, 0px));
+}
+
+/* ---------- PROJECT BUTTON ---------- */
+.project-btn {
+  background: none;     
+  position: relative;      
+  border: none;               
+  margin: 0;
+  margin-bottom: 2vh;
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: none;
+}
+
+.project-btn h2 {
+  font-family: "Futura", system-ui, sans-serif;
+  font-size: 2vh;
+  font-weight: 400;
+  line-height: 1.1;
+  color: black;
+  margin: 0;
+  text-decoration: underline;
+}
+
+/* ---------- HEADER INSTANT MINIMIZED ---------- */
+header.minimized .brand-part,
+header.minimized .project-btn h2 {
+  font-size: 0 !important;       /* collapse instantly */
+  opacity: 0 !important;         /* hide instantly */
+  pointer-events: none;
+  transform: none !important;
+  transition: none !important;    /* disable all animation */
+}
+
+/* ---------- SIDE PANEL ---------- */
+.side-panel {
+  display: flex;
+  flex-direction: column; /* single column layout */
+  justify-content: flex-start;
+  padding: 2.2vw;
+  padding-top: 0 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20vw; /* fixed width for side panel */
+  height: 100vh;
+  background: #fff;
+  overflow-y: auto;
+  z-index: 1000;
+  transform: translateX(-120%);
+  transition: transform 300ms ease;
+  box-shadow: rgb(108, 102, 232) 0px 0px 5vw;
+}
+
+.side-panel.open {
+  transform: translateX(0);
+}
+
+.side-brand {
+  font-family: "Tuplet_italic", system-ui, sans-serif;
+  font-size: 2.2vh;
+  height: auto;
+  width: auto;
+  padding: 0;
+  text-align: justify; 
+  font-weight: 400;
+  color: black;
+}
+
+.brand-part {
+  transition: transform 0.6s ease; /* smooth animation */
+  will-change: transform;
+}
+
+   .side-brand:after {
+        content: "";
+        display: inline-block;
+        width: 100%;	
+    }
+
+    #tagline {
+        height: 80px;
+        overflow: hidden;
+        line-height: 80px; /* vert-center */
+    }
+
+.side-panel-content {
+  font-family: "Futura", system-ui, sans-serif;
+  line-height: 1.25;
+}
+
+.side-panel-content p {
+  margin: 0 0 1em 0;
+}
+
+/* ---------- PROJECT GALLERY (Right side overlay) ---------- */
+.project-gallery {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0vw; /* match your side panel width */
+  width: 75.6vw;
+  height: 100vh;
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.05);
+}
+
+.project-gallery.visible {
+  display: flex;
+}
+
+.gallery-frame {
+  width: 77.8vw;
+  height: 100vh;
+  display: flex;
+  align-items: stretch; /* stretch to fill vertical space */
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}
+
+#galleryImage {
+  width: 100%;
+  height: 100vh;
+  object-fit: cover; /* Fills the frame, cropping if necessary */
+  margin: 0;
+  position: relative;
+  z-index: 1001;
+  background: #fff;
+  display: block;
+}
+
+/* Position arrows at the very left/right of the gallery overlay */
+.gallery-arrow {
+  font-size: 2.2vh;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1002;
+}
+
+.gallery-arrow.left {
+  left: -4vw;
+  display: none;
+}
+
+.gallery-arrow.right {
+  right: -4vw;
+  display: none;
+}
+
+/* ---------- CAROUSEL BUTTONS ---------- */
+
+.carousel-btn.left { left: 2vw; }
+.carousel-btn.right { right: 2vw; }
+
+
+.carousel-btn {
+  background: none;           /* no background */
+  border: none;               /* remove default border */
+  padding: 0;                 /* remove extra padding if you want inline text */
+  display: inline-flex;
+  justify-content: center;
+  bottom: 3.5vh;
+  position: fixed;
+  z-index: 3000;
+}
+
+.carousel-btn .nav-text {
+  font-family: "Futura", system-ui, sans-serif;
+  font-size: 2vh;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+  z-index: 3000;
+  text-decoration: underline;
+  color: black;
+}
+
+/* ---------- INFO BUTTON ---------- */
+.info-btn {
+  background: none;
+  border: none;
+  position: fixed;
+  bottom: 2.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-family: "Futura", system-ui, sans-serif;
+  font-size: 2vh;
+  padding: 10px 0px;
+  line-height: 1.1;
+  margin: 0;
+  text-decoration: underline;
+}
+
+/* ---------- BOTTOM INFO PANEL ---------- */
+.bottom-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20vh;
+  background: #fff;
+  transform: translateY(100%);
+  transition: transform 300ms ease;
+  z-index: 1003;
+  box-shadow: rgb(255, 46, 238) 0px 0px 5vh;
+}
+
+.bottom-panel.open { transform: translateY(0); }
+
+.bottom-panel__body {
+  display: flex;                /* use flexbox for easy centering */
+  justify-content: center;      /* center all columns horizontally */
+  gap: 5vw;                     /* space between columns */
+  margin-top: 24px;
+  font-family: "Futura", system-ui, sans-serif;
+  flex-wrap: wrap;              /* allows wrapping on smaller screens */
+  line-height: 1.25;
+}
+
+.bottom-panel__body .column {
+  flex: 0 1 25%;                /* columns take 25% of panel width, can shrink */
+  max-width: 20vw;              /* ensures they don’t grow too large */
+  box-sizing: border-box;       /* include padding in width */
+  display: inline-block;
+}
+
+.bottom-panel__content {
+  display: flex;
+  justify-content: center; /* center the body inside the content */
+  width: 100%;
+  align-items: flex-end;
+}
+
+.bottom-panel__close {
+  position: absolute;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.bottom-panel__body {
+  margin-top: 24px;
+  font-size: 12pt;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  font-family: "Futura", system-ui, sans-serif;
+}
+
+/* ---------- CUSTOM CURSOR ---------- */
+#custom-cursor {
+  position: fixed;
+  left: 0; top: 0;
+  width: 32px; height: 32px;
+  pointer-events: none;
+  background: url('Cursor-04.svg') center/contain no-repeat;
+  border-radius: 50%;
+  transition: transform 0.8s cubic-bezier(.4,2,.6,1);
+  z-index: 9999;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+#custom-cursor.big {
+  transform: translate(-50%, -50%) scale(1.8);
+}
+
+
