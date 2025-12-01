@@ -20,9 +20,122 @@ a {
   color: black;
 }
 
+.mobile-description{
+display: none;
+}
+
+.category{
+  font-size: 1.5vh;
+}
+
+/* ---------- BOTTOM INFO PANEL ---------- */
+.bottom-panel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 20vh;
+  background: #fff;
+  transform: translateY(100%);
+  transition: transform 300ms ease;
+  z-index: 1003;
+  box-shadow: rgb(255, 46, 238) 0px 0px 5vh;
+}
+
+.bottom-panel.open { transform: translateY(0); }
+
+.bottom-panel__body {
+  display: flex;                /* use flexbox for easy centering */
+  justify-content: center;      /* center all columns horizontally */
+  gap: 5vw;                     /* space between columns */
+  margin-top: 24px;
+  font-family: "Futura", system-ui, sans-serif;
+  flex-wrap: wrap;              /* allows wrapping on smaller screens */
+  line-height: 1.25;
+}
+
+.bottom-panel__body .column {
+  flex: 0 1 25%;                /* columns take 25% of panel width, can shrink */
+  max-width: 20vw;              /* ensures they don’t grow too large */
+  box-sizing: border-box;       /* include padding in width */
+  display: inline-block;
+}
+
+.bottom-panel__content {
+  display: flex;
+  justify-content: center; /* center the body inside the content */
+  width: 100%;
+  align-items: flex-end;
+}
+
+.bottom-panel__close {
+  position: absolute;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.bottom-panel__body {
+  margin-top: 24px;
+  font-size: 12pt;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
 
 @media (max-width: 450px) {
 
+  .mobile-description {
+    font-size: 0.8rem !important;
+    line-height: 1.2 !important;
+    display: block !important;
+    position: relative;
+    top: 18vh;          
+    left: 0;
+    padding: 0 10vw !important;
+    z-index: 100;
+    background: transparent;
+    height: 42vh;   
+    overflow: hidden;         
+}
+
+.mobile-text {
+    height: 100%;
+    overflow-y: auto;          
+    -webkit-overflow-scrolling: touch;
+}
+
+  .mobile-description p,
+  .mobile-description span {
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  .mobile-description .category {
+  font-size: 0.65rem !important;
+}
+
+/* Fade gradients */
+.mobile-description .fade {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 8vh;
+    pointer-events: none;
+    z-index: 9999;             
+}
+
+.mobile-description .fade-top {
+    top: 0;
+    background: linear-gradient(to bottom, white 0%, transparent 100%);
+}
+
+.mobile-description .fade-bottom {
+    bottom: 0;
+    background: linear-gradient(to top, white 0%, transparent 100%);
+}
   body{
     width: 100%;
   }
@@ -54,6 +167,10 @@ a {
 #brand-right {
   width: 100% !important;
   transition: none !important;
+}
+
+#brand-right {
+  text-align: right !important;
 }
 
 .bg-wrapper {
@@ -100,19 +217,6 @@ body.loaded #brand-right {
   transform: none !important;   /* move right */
 }
 
-.mobile-description{
-    display: block !important;
-    position: absolute;
-    top: 45vh;           /* adjust as needed for your layout */
-    left: 0;
-    padding: 0 5vw;
-    column-count: 2;
-    column-gap: 2vw;
-    z-index: 100;
-    background: transparent;
-    font-size: 1vh !important;;
-}
-
   #brandGroup {
     position: relative !important;
     top: 2vh !important;
@@ -129,7 +233,6 @@ body.loaded #brand-right {
     font-size: 5vh !important;
     margin: 0 !important;
     padding: 0 !important;
-    text-align: left !important;
     transform: none !important;
     position: static !important;
   }
@@ -148,24 +251,22 @@ body.loaded #brand-right {
   .gallery-arrow.left {
     left: 1vw !important;
     padding: 0 1vw;
+    color: #000 !important;
   }
   .gallery-arrow.right {
     right: 1vw !important;
     padding: 0 1vw;
-  }
-
-    .bottom-panel {
-    height: auto;
-    min-height: 20vh;
-    padding: 2vw;
+    color: #000 !important;
   }
  
   .bottom-panel__body {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 2vw !important;
-    font-size: 2vh !important;
+    display: block !important;
+    grid-template-columns: none !important;
+    line-height: 1.3 !important;
+    font-size: 0.6rem !important;
+    width: auto !important;
   }
+
   .bottom-panel__body .column {
     max-width: 100% !important;
     flex: 1 1 50% !important;
@@ -173,18 +274,31 @@ body.loaded #brand-right {
     margin-bottom: 2vh !important;
   }
 
+  .bg-wrapper.shifted-up {
+  transform: none !important;
+  transition: none !important;
 }
 
-.mobile-description{
-display: none;
+.bottom-panel {
+  display: block !important;   
+  padding: 2vw 10vw;
+  height: 42vh !important;
+  margin-top: 5vh !important;
+  line-height: 1.3 !important;
+}
+
+.bottom-panel p{
+    font-size: 0.8rem !important;
+}
+
+.bottom-panel__content {
+  display: block !important;
+}
+
 }
 
 .underlined{
   text-decoration: underline;
-}
-
-.category{
-  font-size: 1.5vh;
 }
 
 p{
@@ -298,7 +412,7 @@ header {
 }
 
 #brand-left{
-  text-align: right;
+  text-align: left;
   padding-left: 2.2vw;
 }
 
@@ -531,63 +645,6 @@ header.minimized .project-btn h2 {
   line-height: 1.1;
   margin: 0;
   text-decoration: underline;
-}
-
-/* ---------- BOTTOM INFO PANEL ---------- */
-.bottom-panel {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 20vh;
-  background: #fff;
-  transform: translateY(100%);
-  transition: transform 300ms ease;
-  z-index: 1003;
-  box-shadow: rgb(255, 46, 238) 0px 0px 5vh;
-}
-
-.bottom-panel.open { transform: translateY(0); }
-
-.bottom-panel__body {
-  display: flex;                /* use flexbox for easy centering */
-  justify-content: center;      /* center all columns horizontally */
-  gap: 5vw;                     /* space between columns */
-  margin-top: 24px;
-  font-family: "Futura", system-ui, sans-serif;
-  flex-wrap: wrap;              /* allows wrapping on smaller screens */
-  line-height: 1.25;
-}
-
-.bottom-panel__body .column {
-  flex: 0 1 25%;                /* columns take 25% of panel width, can shrink */
-  max-width: 20vw;              /* ensures they don’t grow too large */
-  box-sizing: border-box;       /* include padding in width */
-  display: inline-block;
-}
-
-.bottom-panel__content {
-  display: flex;
-  justify-content: center; /* center the body inside the content */
-  width: 100%;
-  align-items: flex-end;
-}
-
-.bottom-panel__close {
-  position: absolute;
-  border: none;
-  background: transparent;
-  font-size: 24px;
-  line-height: 1;
-}
-
-.bottom-panel__body {
-  margin-top: 24px;
-  font-size: 12pt;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  font-family: "Futura", system-ui, sans-serif;
 }
 
 /* ---------- CUSTOM CURSOR ---------- */
