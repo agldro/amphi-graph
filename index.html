@@ -7,8 +7,7 @@
      <link rel="icon" type="image/png" href="Images/amphi_graph.png">
     <link rel="stylesheet" href="index.css" />
   </head>
-  <body>
-    <!-- Background images for smooth fade -->
+<body>
     <div id="backgroundContainer">
       <div class="bg-wrapper">
         <button class="project-btn" id="projectButton" aria-expanded="false">
@@ -51,7 +50,7 @@
           <div class="column">
             <p><span class="underlined"> &nbsp;&nbsp;&nbsp;&nbsp; amphi-graph</span> is a graphic and interactive design studio, 
               an ongoing collaboration between <a href="https://aglaya-drobysheva.me" target="_blank" rel="noopener noreferrer">Aglaya Drobysheva</a> and
-               <a href="https://www.tabithaskye.com" target="_blank" rel="noopener noreferrer">Tabitha Anderton.</a><br></p>
+               <a href="https://www.tabithaskye.com" target="_blank" rel="noopener noreferrer">Tabitha Anderton</a>.<br></p>
           </div>
           <div class="column">
             <p>It is a space for exploration, creation, and friction,
@@ -89,7 +88,7 @@
         The identity of the exhibition and catalogue design was based on the metaphor of a desire path,
         which holds the potential to transform the predefined systems around us.</p>
         <p>
-          <br><br><span class="category">Specifications</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Japanese fold </span><br>
+          <br><span class="category">Specifications</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Japanese fold </span><br>
           <span class="category">Typefaces</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp;  Futura, Syne Tactile, Syne Mono</span><br>
           <span class="category">Paper</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Holmen TRND, Crush Corn </span><br>
           <span class="category">Design supervision</span><span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Jeremy Jansen </span><br>
@@ -136,7 +135,7 @@
           words, to reveal the underlayer. The reader can choose not to 
           ignore the narrative of violence. </p>
 
-          <p><br><br><span class="category">Specifications</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; RISO-printed in white and purple, Laser-cutted, binded with a zip tie </span> <br>
+          <p><br><span class="category">Specifications</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; RISO-printed in white and purple, Laser-cutted, binded with a zip tie </span> <br>
           <span class="category">Typefaces</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Avara, Helvetica Neue </span> <br>
           <span class="category">Paper</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Biotop 80gr, Biotop 250gr, <br> Curious Matter </span><br>
           <span class="category">Design</span> <span class="underlined">&nbsp;&nbsp;&nbsp;&nbsp; Tabitha Anderton, Aglaya Drobysheva, Carla Sanfrantello Marco</span></p>
@@ -200,10 +199,14 @@ function isMobile() {
     // Update the project button title
     projectBtn.querySelector('h2').textContent = project.title;
 
-  if (isMobile()) {
-  mobileInfo.innerHTML = project.info;   // Always visible on mobile
+if (isMobile()) {
+  mobileInfo.innerHTML = `
+      <div class="fade fade-top"></div>
+      <div class="fade fade-bottom"></div>
+      <div class="mobile-text">${project.info}</div>
+  `;
 } else if (sidePanel.classList.contains('open')) {
-  sidePanelContent.innerHTML = project.info; // Desktop
+  sidePanelContent.innerHTML = project.info;
 }
   }
 
