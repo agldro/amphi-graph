@@ -302,6 +302,13 @@ if (isMobile()) {
   }
 });
 
+  bgImage.addEventListener('click', e => {
+  e.stopPropagation();
+  if (!isMobile()) {
+    sidePanel.classList.contains('open') ? closePanel() : openPanel();
+  }
+});
+
   document.addEventListener('click', e => {
     if (sidePanel.classList.contains('open') &&
         !sidePanel.contains(e.target) &&
