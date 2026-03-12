@@ -1,0 +1,49 @@
+/* @font-face {
+  font-family: "Garabosse";
+  src: url("Fonts/Garabosse-Parangon.otf") format("opentype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+h1{
+    font-family: "Garabosse", serif;
+    text-align: center;
+    font-size: 15px;
+    margin-top:20px;
+}
+
+title {
+    justify-content:space-between;
+}
+
+video{
+    width:90%;
+    max-width:500px;
+    border-radius:10px;
+}
+
+canvas{
+    margin-top:15px;
+    width:90%;
+    max-width:500px;
+    border-radius:10px;
+}
+
+button{
+    font-family: "Garabosse", serif;
+    margin-top:20px;
+    padding:15px 25px;
+    font-size:18px;
+    border:none;
+    border-radius:40px;
+    stroke-width: 1px;
+    stroke: black;
+    background:white;
+    color:rgb(0, 0, 0);
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1b5fad;
+} */
