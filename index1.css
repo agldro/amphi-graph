@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
   font-family: "Garabosse";
   src: url("Fonts/Garabosse-Parangon.otf") format("opentype");
   font-weight: 200;
@@ -6,21 +6,63 @@
   font-display: swap;
 }
 
-h1{
-    font-family: "Garabosse", serif;
-    text-align: center;
-    font-size: 15px;
-    margin-top:20px;
+.justify{
+    text-align: justify;
+    width: 100%;
+        height: 0;
 }
 
-title {
+.justify::after{
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
+
+h1{
+    font-family: "Garabosse", serif;
+    font-size: 10px;
+}
+
+#title {
+    padding-top: 5px;
+    display: flex;
     justify-content:space-between;
+    margin: 0%;
+}
+
+.wrap-box{
+    display: flex; 
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+    position: sticky;
+}
+
+button{
+    font-family: "Garabosse", serif;
+    padding:5px 8px;
+    font-size:10px;
+    background:white;
+    border-radius: 40px;
+    border: 1px solid black;
+    cursor:pointer;
+    width: auto;
 }
 
 video{
-    width:90%;
+    width:96%;
     max-width:500px;
     border-radius:10px;
+    border: 1px solid black;
+    margin-left: 2%;
+}
+
+img{
+    margin-top:15px;
+    width:96%;
+    max-width:500px;
+    border-radius:10px;
+    margin-left: 2%;
 }
 
 canvas{
@@ -28,22 +70,5 @@ canvas{
     width:90%;
     max-width:500px;
     border-radius:10px;
+    margin-left: 5%;
 }
-
-button{
-    font-family: "Garabosse", serif;
-    margin-top:20px;
-    padding:15px 25px;
-    font-size:18px;
-    border:none;
-    border-radius:40px;
-    stroke-width: 1px;
-    stroke: black;
-    background:white;
-    color:rgb(0, 0, 0);
-    cursor:pointer;
-}
-
-button:hover{
-    background:#1b5fad;
-} */
