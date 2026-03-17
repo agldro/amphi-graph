@@ -12,7 +12,7 @@
 
       #viewport {
         width: 100vw;
-        height: 40vh;
+        height: 60vh;
         overflow: hidden;
       }
 
@@ -80,14 +80,8 @@ video{
     margin-left: 2%;
 }
 
-
-
-canvas{
-    margin-top:15px;
-    width:90%;
-    max-width:500px;
-    border-radius:10px;
-    margin-left: 5%;
+canvas {
+  touch-action: none;
 }
 
 p {
@@ -98,12 +92,19 @@ p {
       vertical-align: baseline;
 }
 
+#scrollControls {
+    display: flex;
+    justify-content: center;
+}
+
 #scrollLeft {
     width: 20px;
+    padding-right: 5px;
 }
 
 #scrollRight {
     width: 20px;
+    padding-left: 5px;
 }
 
 #footer{
