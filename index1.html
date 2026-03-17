@@ -16,56 +16,100 @@
      <h1>11.04.2026</h1>
  </div>
 
-<video id="video" autoplay playsinline></video>
-<canvas id="canvas" style="display:none"></canvas>
-<img id="photo"><div class="wrap-box">
-
-<button id="startCamera">Allow Camera</button>
-<button id="takePhoto">Take Photo</button>
+<div id="viewport">
+  <div id="container">
+    <canvas id="bgCanvas"></canvas>
+    <canvas id="drawCanvas"></canvas>
+  </div>
 </div>
 
+<div id="scrollControls">
+  <img src="SVG/left.svg" id="scrollLeft">
+  <img src="SVG/right.svg" id="scrollRight">
+</div>
+
+  <div id="footer">
+    <p>Step I</p>
+    <a href="phototool.html">
+      <img src="SVG/next.svg" id="next">
+    </a>
+ </div>
+
 <script>
+const viewport = document.getElementById('viewport');
+const scrollAmount = 200; // pixels per click
 
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const photo = document.getElementById("photo");
-
-document.getElementById("startCamera").onclick = async () => {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "environment" },
-      audio: false
-    });
-
-    video.srcObject = stream;
-
-  } catch (err) {
-    alert("Camera access denied or unavailable");
-    console.error(err);
-  }
-};
-
-document.getElementById("takePhoto").onclick = () => {
-
-  const context = canvas.getContext("2d");
-
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
-  context.drawImage(video, 0, 0);
-
- const data = canvas.toDataURL("image/png");
-
-photo.src = data;
-
-fetch("https://script.google.com/macros/s/AKfycbwyRWkuU-e0XaOVE7dbyPtBXs5_VR51jXIegJvcCJmROmQxM546AhluHd9S-zDP9PK7xQ/exec", {
-  method: "POST",
-  mode: "no-cors",
-  body: JSON.stringify({
-    image: data
-  })
+document.getElementById('scrollLeft').addEventListener('click', () => {
+  viewport.scrollBy({
+    left: -scrollAmount,
+    behavior: 'smooth'
+  });
 });
+
+document.getElementById('scrollRight').addEventListener('click', () => {
+  viewport.scrollBy({
+    left: scrollAmount,
+    behavior: 'smooth'
+  });
+});
+
+const bgCanvas = document.getElementById('bgCanvas');
+const drawCanvas = document.getElementById('drawCanvas');
+const container = document.getElementById('container');
+const bgCtx = bgCanvas.getContext('2d');
+const drawCtx = drawCanvas.getContext('2d');
+
+const img = new Image();
+img.src = 'SVG/street.svg';
+
+img.onload = () => {
+  const height = 500; // fixed visible height
+
+  // Scale image height to fit viewport, keep long width
+  const scale = height / img.height;
+  const width = img.width * scale;
+
+  bgCanvas.width = width;
+  bgCanvas.height = height;
+  drawCanvas.width = width;
+  drawCanvas.height = height;
+
+  // Make container LONG (this enables scrolling)
+  container.style.width = width + 'px';
+  container.style.height = height + 'px';
+
+  bgCtx.drawImage(img, 0, 0, width, height);
 };
+
+// Drawing logic (works while scrolling)
+let drawing = false;
+
+function getMousePos(e) {
+  const rect = drawCanvas.getBoundingClientRect();
+  return {
+    x: e.clientX - rect.left,
+    y: e.clientY - rect.top
+  };
+}
+
+drawCanvas.addEventListener('mousedown', (e) => {
+  drawing = true;
+  const pos = getMousePos(e);
+  drawCtx.beginPath();
+  drawCtx.moveTo(pos.x, pos.y);
+});
+
+drawCanvas.addEventListener('mousemove', (e) => {
+  if (!drawing) return;
+  const pos = getMousePos(e);
+  drawCtx.lineTo(pos.x, pos.y);
+  drawCtx.strokeStyle = 'red';
+  drawCtx.lineWidth = 2;
+  drawCtx.stroke();
+});
+
+drawCanvas.addEventListener('mouseup', () => drawing = false);
+drawCanvas.addEventListener('mouseleave', () => drawing = false);
 </script>
 
 </body>
