@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapping One Long-Long Street</title>
-    <link rel="stylesheet" href="index1.css" />
+    <link rel="stylesheet" href="index.css" />
 </head>
 
 <body>
@@ -63,7 +63,7 @@ const img = new Image();
 img.src = 'SVG/street.svg';
 
 img.onload = () => {
-  const height = 500; // fixed visible height
+  const height = 400; // fixed visible height
 
   // Scale image height to fit viewport, keep long width
   const scale = height / img.height;
@@ -81,10 +81,9 @@ img.onload = () => {
   bgCtx.drawImage(img, 0, 0, width, height);
 };
 
-// Drawing logic (works while scrolling)
 let drawing = false;
 
-function getMousePos(e) {
+function getPointerPos(e) {
   const rect = drawCanvas.getBoundingClientRect();
   return {
     x: e.clientX - rect.left,
@@ -92,24 +91,30 @@ function getMousePos(e) {
   };
 }
 
-drawCanvas.addEventListener('mousedown', (e) => {
+// Start drawing
+drawCanvas.addEventListener('pointerdown', (e) => {
   drawing = true;
-  const pos = getMousePos(e);
+  drawCanvas.setPointerCapture(e.pointerId);
+
+  const pos = getPointerPos(e);
   drawCtx.beginPath();
   drawCtx.moveTo(pos.x, pos.y);
 });
 
-drawCanvas.addEventListener('mousemove', (e) => {
+// Draw
+drawCanvas.addEventListener('pointermove', (e) => {
   if (!drawing) return;
-  const pos = getMousePos(e);
+
+  const pos = getPointerPos(e);
   drawCtx.lineTo(pos.x, pos.y);
   drawCtx.strokeStyle = 'red';
   drawCtx.lineWidth = 2;
   drawCtx.stroke();
 });
 
-drawCanvas.addEventListener('mouseup', () => drawing = false);
-drawCanvas.addEventListener('mouseleave', () => drawing = false);
+// Stop drawing
+drawCanvas.addEventListener('pointerup', () => drawing = false);
+drawCanvas.addEventListener('pointercancel', () => drawing = false);
 </script>
 
 </body>
