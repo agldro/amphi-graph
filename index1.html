@@ -9,16 +9,15 @@
 
 <body>
 
-  <h1 class="justify">Mapping One Long-Long Street</h1>
-
-  <div id="title">
-    <h1>Workshop</h1>
-     <h1>11.04.2026</h1>
- </div>
+<h1 class="justify">Mapping One Long-Long Street</h1>
+<div id="title">
+  <h1>Workshop</h1>
+  <h1>11.04.2026</h1>
+</div>
 
 <div id="viewport">
   <div id="container">
-    <canvas id="bgCanvas"></canvas>
+    <div id="streetSVG"></div>
     <canvas id="drawCanvas"></canvas>
   </div>
 </div>
@@ -28,96 +27,90 @@
   <img src="SVG/right.svg" id="scrollRight">
 </div>
 
-  <div id="footer">
-    <p>Step I</p>
-    <a href="phototool.html">
-      <img src="SVG/next.svg" id="next">
-    </a>
- </div>
+<div id="footer">
+  <p>Step I</p>
+  <a href="phototool.html"><img src="SVG/next.svg" width="40"></a>
+</div>
 
 <script>
-const viewport = document.getElementById('viewport');
-const scrollAmount = 200; // pixels per click
-
-document.getElementById('scrollLeft').addEventListener('click', () => {
-  viewport.scrollBy({
-    left: -scrollAmount,
-    behavior: 'smooth'
-  });
-});
-
-document.getElementById('scrollRight').addEventListener('click', () => {
-  viewport.scrollBy({
-    left: scrollAmount,
-    behavior: 'smooth'
-  });
-});
-
-const bgCanvas = document.getElementById('bgCanvas');
+const svgObject = document.getElementById('streetSVG');
 const drawCanvas = document.getElementById('drawCanvas');
 const container = document.getElementById('container');
-const bgCtx = bgCanvas.getContext('2d');
 const drawCtx = drawCanvas.getContext('2d');
 
-const img = new Image();
-img.src = 'SVG/street.svg';
+const viewport = document.getElementById('viewport');
+const step = 200;
 
-img.onload = () => {
-  const height = 400; // fixed visible height
-
-  // Scale image height to fit viewport, keep long width
-  const scale = height / img.height;
-  const width = img.width * scale;
-
-  bgCanvas.width = width;
-  bgCanvas.height = height;
-  drawCanvas.width = width;
-  drawCanvas.height = height;
-
-  // Make container LONG (this enables scrolling)
-  container.style.width = width + 'px';
-  container.style.height = height + 'px';
-
-  bgCtx.drawImage(img, 0, 0, width, height);
+document.getElementById('scrollRight').onclick = () => {
+  viewport.scrollBy({ left: step, behavior: "smooth" });
 };
 
+document.getElementById('scrollLeft').onclick = () => {
+  viewport.scrollBy({ left: -step, behavior: "smooth" });
+};
+
+fetch("SVG/street.svg")
+  .then(res => res.text())
+  .then(svgText => {
+
+    // inject SVG directly into DOM
+    const wrapper = document.getElementById("streetSVG");
+    wrapper.innerHTML = svgText;
+
+    const svgEl = wrapper.querySelector("svg");
+
+    // get REAL svg size
+    const viewBox = svgEl.viewBox.baseVal;
+    const svgWidth = viewBox.width;
+    const svgHeight = viewBox.height;
+
+    // set container to true svg size
+    container.style.width = svgWidth + "px";
+    container.style.height = svgHeight + "px";
+
+    // set canvas to identical pixel grid
+    drawCanvas.width = svgWidth;
+    drawCanvas.height = svgHeight;
+
+    // IMPORTANT: set svg size attributes (not CSS)
+    svgEl.setAttribute("width", svgWidth);
+    svgEl.setAttribute("height", svgHeight);
+  });
+
+// Drawing
 let drawing = false;
 
-function getPointerPos(e) {
+function getPointerPos(e){
   const rect = drawCanvas.getBoundingClientRect();
+  const scaleX = drawCanvas.width / rect.width;
+  const scaleY = drawCanvas.height / rect.height;
+
   return {
-    x: e.clientX - rect.left,
-    y: e.clientY - rect.top
+    x: (e.clientX - rect.left) * scaleX,
+    y: (e.clientY - rect.top) * scaleY
   };
 }
 
-// Start drawing
-drawCanvas.addEventListener('pointerdown', (e) => {
+drawCanvas.addEventListener('pointerdown', e => {
   drawing = true;
   drawCanvas.setPointerCapture(e.pointerId);
-
   const pos = getPointerPos(e);
   drawCtx.beginPath();
   drawCtx.moveTo(pos.x, pos.y);
 });
 
-// Draw
-drawCanvas.addEventListener('pointermove', (e) => {
+drawCanvas.addEventListener('pointermove', e => {
   if (!drawing) return;
-
   const pos = getPointerPos(e);
   drawCtx.lineTo(pos.x, pos.y);
-  drawCtx.strokeStyle = 'red';
-  drawCtx.lineWidth = 2;
+  drawCtx.strokeStyle = "red";
+  drawCtx.lineWidth = 1;
+  drawCtx.lineCap = "round";
   drawCtx.stroke();
 });
 
-// Stop drawing
 drawCanvas.addEventListener('pointerup', () => drawing = false);
 drawCanvas.addEventListener('pointercancel', () => drawing = false);
 </script>
-
 </body>
-
-
 </html>
