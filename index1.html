@@ -17,7 +17,7 @@
 
 <div id="viewport">
   <div id="container">
-    <div id="streetSVG"></div>
+    <object id="streetSVG" type="image/svg+xml" data="SVG/street.svg"></object>
     <canvas id="drawCanvas"></canvas>
   </div>
 </div>
@@ -49,33 +49,29 @@ document.getElementById('scrollLeft').onclick = () => {
   viewport.scrollBy({ left: -step, behavior: "smooth" });
 };
 
-fetch("SVG/street.svg")
-  .then(res => res.text())
-  .then(svgText => {
+svgObject.addEventListener('load', () => {
+  const svgDoc = svgObject.contentDocument;
+  const svgEl = svgDoc.querySelector('svg');
 
-    // inject SVG directly into DOM
-    const wrapper = document.getElementById("streetSVG");
-    wrapper.innerHTML = svgText;
+  const viewBox = svgEl.viewBox.baseVal;
 
-    const svgEl = wrapper.querySelector("svg");
+  const svgAspect = viewBox.width / viewBox.height;
 
-    // get REAL svg size
-    const viewBox = svgEl.viewBox.baseVal;
-    const svgWidth = viewBox.width;
-    const svgHeight = viewBox.height;
+  const svgHeight = 400;                 // fixed height
+  const svgWidth  = svgHeight * svgAspect;  // auto width
 
-    // set container to true svg size
-    container.style.width = svgWidth + "px";
-    container.style.height = svgHeight + "px";
+  // Set container to REAL street size
+  container.style.width  = svgWidth + "px";
+  container.style.height = svgHeight + "px";
 
-    // set canvas to identical pixel grid
-    drawCanvas.width = svgWidth;
-    drawCanvas.height = svgHeight;
+  // Size the SVG visually
+  svgObject.style.width  = svgWidth + "px";
+  svgObject.style.height = svgHeight + "px";
 
-    // IMPORTANT: set svg size attributes (not CSS)
-    svgEl.setAttribute("width", svgWidth);
-    svgEl.setAttribute("height", svgHeight);
-  });
+  // Make canvas identical pixel surface
+  drawCanvas.width  = svgWidth + "px";
+  drawCanvas.height = svgHeight + "px";
+});
 
 // Drawing
 let drawing = false;
