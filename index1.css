@@ -1,7 +1,6 @@
 @font-face {
-  font-family: "Garabosse";
-  src: url("Fonts/Garabosse-Parangon.otf") format("opentype");
-  font-weight: 200;
+  font-family: "Mono";
+  src: url("Fonts/IBMPlexMono-Regular.ttf") format("opentype");
   font-style: normal;
   font-display: swap;
 }
@@ -10,22 +9,19 @@
       margin: 0;
     }
 
-      #viewport {
-        width: 100vw;
-        height: 60vh;
-        overflow: hidden;
-      }
+#viewport {
+  width: 100vw;
+  height: 450px;
+  overflow-x: auto;   /* allow horizontal scroll */
+  overflow-y: hidden;
+  position: relative;
+}
 
-      #container {
+        #container {
         position: relative;
-        height: 100%;
-      }
-
-      canvas {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
+        display: block;
+        height: 400px;
+        }
 
 .justify{
     text-align: justify;
@@ -40,8 +36,8 @@
 }
 
 h1{
-    font-family: "Garabosse", serif;
-    font-size: 13px;
+    font-family: "Mono", serif;
+    font-size: 12px;
     height: auto;
     padding-left: 2.5%;
 }
@@ -62,7 +58,7 @@ h1{
 }
 
 button{
-    font-family: "Garabosse", serif;
+    font-family: "Mono", serif;
     padding:5px 8px;
     font-size:12px;
     background:white;
@@ -80,12 +76,24 @@ video{
     margin-left: 2%;
 }
 
-canvas {
+#streetSVG {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#drawCanvas {
+  position: absolute;
+  left: 0;
+  z-index: 999;
+  top: 0;
   touch-action: none;
 }
 
 p {
-    font-family: "Garabosse", serif;
+    font-family: "Mono", serif;
     font-size: 13px;
     margin: 0;
     height: auto;
