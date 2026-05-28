@@ -108,46 +108,63 @@ drawCanvas.addEventListener('pointermove', e => {
 drawCanvas.addEventListener('pointerup', () => drawing = false);
 drawCanvas.addEventListener('pointercancel', () => drawing = false);
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwL3ZqRD4DVjvKAc-qEFdFcl6GGrBcy0EcP9Od7I_LdsItG7LjEu3nbaayeU7lI8_Dm/exec";
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyANuPYocQctCUgqIii_QrhcNaXdPKomVLgkBo684jJukMJ1yaQor3uQP9GnObTOCzh/exec";
 
 document
   .getElementById("locationForm")
-  .addEventListener("submit", async function(e){
+  .addEventListener("submit", async function (e) {
 
     e.preventDefault();
 
-    // Convert drawing to image
-    const drawingData = drawCanvas.toDataURL("image/png");
-
-    // Get text values
-    const location = document.getElementById("location").value;
-    const view = document.getElementById("viewfinder").value;
-
-    const payload = {
-      drawing: drawingData,
-      location: location,
-      view: view
-    };
-
     try {
+
+      // Convert canvas to image
+      const drawingData = drawCanvas.toDataURL("image/png",0.7);
+
+      // Get input values
+      const location =
+        document.getElementById("location").value;
+
+      const view =
+        document.getElementById("viewfinder").value;
+
+      const payload = {
+        drawing: drawingData,
+        location: location,
+        view: view
+      };
 
       const response = await fetch(SCRIPT_URL, {
         method: "POST",
-        body: JSON.stringify(payload),
+        mode: "cors",
         headers: {
           "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify(payload)
       });
 
-      const result = await response.text();
-      console.log(result);  
+      // Read response as JSON
+      const result = await response.json();
+
+      console.log("Server response:", result);
+
+      // Check for server-side success
+      if (!response.ok || result.success !== true) {
+        throw new Error(
+          result.error || "Server error"
+        );
+      }
 
       alert("Saved successfully!");
 
-    } catch(error) {
+    } catch (error) {
 
-      console.error(error);
-      alert("Error saving data");
+      console.error("Upload failed:", error);
+
+      alert(
+        "Error saving data: " + error.message
+      );
 
     }
 
