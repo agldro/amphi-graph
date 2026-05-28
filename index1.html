@@ -17,7 +17,7 @@
 
 <div id="viewport">
   <div id="container">
-    <object id="streetSVG" type="image/svg+xml" data="SVG/street.svg"></object>
+    <object id="streetSVG" type="image/svg+xml" data="SVG/street-2.svg"></object>
     <canvas id="drawCanvas"></canvas>
   </div>
 </div>
@@ -27,51 +27,54 @@
   <img src="SVG/right.svg" id="scrollRight">
 </div>
 
+<form id="locationForm">
+  <label id="text" for="location">Where are you? How would you describe your location in realtion to the street?</label><br>
+  <input id="location" type="text" name="location"><br>
+  <label id="view" for="viewfinder">What do you see through your viewfinder?</label><br>
+  <input id="viewfinder" type="text" name="viewfinder"><br>
+  <button id="save" type="submit">Save location</button>
+</form>
+
 <div id="footer">
   <p>Step I</p>
   <a href="phototool.html"><img src="SVG/next.svg" width="40"></a>
 </div>
 
 <script>
+const svgHeight = 400;            // fixed height of the street
+const viewBoxWidth = 326.05;      // your SVG’s original viewBox width
+const viewBoxHeight = 64.1;     // your SVG’s original viewBox height
+const svgWidth = svgHeight * (viewBoxWidth / viewBoxHeight); // compute proportional width
+
+// Get DOM elements
+const container = document.getElementById('container');
 const svgObject = document.getElementById('streetSVG');
 const drawCanvas = document.getElementById('drawCanvas');
-const container = document.getElementById('container');
 const drawCtx = drawCanvas.getContext('2d');
-
 const viewport = document.getElementById('viewport');
-const step = 200;
 
+// Set container and SVG size
+container.style.width  = svgWidth + "px";
+container.style.height = svgHeight + "px";
+
+svgObject.style.width  = svgWidth + "px";
+svgObject.style.height = svgHeight + "px";
+
+// Set canvas to exact same size as SVG
+drawCanvas.width  = svgWidth;
+drawCanvas.height = svgHeight;
+
+drawCtx.fillStyle = "white";
+drawCtx.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
+
+// Scroll buttons
+const step = 200;
 document.getElementById('scrollRight').onclick = () => {
   viewport.scrollBy({ left: step, behavior: "smooth" });
 };
-
 document.getElementById('scrollLeft').onclick = () => {
   viewport.scrollBy({ left: -step, behavior: "smooth" });
 };
-
-svgObject.addEventListener('load', () => {
-  const svgDoc = svgObject.contentDocument;
-  const svgEl = svgDoc.querySelector('svg');
-
-  const viewBox = svgEl.viewBox.baseVal;
-
-  const svgAspect = viewBox.width / viewBox.height;
-
-  const svgHeight = 400;                 // fixed height
-  const svgWidth  = svgHeight * svgAspect;  // auto width
-
-  // Set container to REAL street size
-  container.style.width  = svgWidth + "px";
-  container.style.height = svgHeight + "px";
-
-  // Size the SVG visually
-  svgObject.style.width  = svgWidth + "px";
-  svgObject.style.height = svgHeight + "px";
-
-  // Make canvas identical pixel surface
-  drawCanvas.width  = svgWidth + "px";
-  drawCanvas.height = svgHeight + "px";
-});
 
 // Drawing
 let drawing = false;
@@ -80,7 +83,6 @@ function getPointerPos(e){
   const rect = drawCanvas.getBoundingClientRect();
   const scaleX = drawCanvas.width / rect.width;
   const scaleY = drawCanvas.height / rect.height;
-
   return {
     x: (e.clientX - rect.left) * scaleX,
     y: (e.clientY - rect.top) * scaleY
@@ -99,14 +101,62 @@ drawCanvas.addEventListener('pointermove', e => {
   if (!drawing) return;
   const pos = getPointerPos(e);
   drawCtx.lineTo(pos.x, pos.y);
-  drawCtx.strokeStyle = "red";
-  drawCtx.lineWidth = 1;
+  drawCtx.strokeStyle = "blue";
+  drawCtx.lineWidth = 2;
   drawCtx.lineCap = "round";
   drawCtx.stroke();
 });
 
 drawCanvas.addEventListener('pointerup', () => drawing = false);
 drawCanvas.addEventListener('pointercancel', () => drawing = false);
+// ==========================================
+// SAVE TO GOOGLE SHEET
+// ==========================================
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwL3ZqRD4DVjvKAc-qEFdFcl6GGrBcy0EcP9Od7I_LdsItG7LjEu3nbaayeU7lI8_Dm/exec";
+
+document
+  .getElementById("locationForm")
+  .addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    // Convert drawing to image
+    const drawingData = drawCanvas.toDataURL("image/png");
+
+    // Get text values
+    const location = document.getElementById("location").value;
+    const view = document.getElementById("viewfinder").value;
+
+    const payload = {
+      drawing: drawingData,
+      location: location,
+      view: view
+    };
+
+    try {
+
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      const result = await response.json();
+
+      alert("Saved successfully!");
+
+    } catch(error) {
+
+      console.error(error);
+      alert("Error saving data");
+
+    }
+
+});
+
 </script>
 </body>
 </html>
