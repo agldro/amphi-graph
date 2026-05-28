@@ -64,8 +64,6 @@ svgObject.style.height = svgHeight + "px";
 drawCanvas.width  = svgWidth;
 drawCanvas.height = svgHeight;
 
-// drawCtx.fillStyle = "white";
-// drawCtx.fillRect(0, 0, drawCanvas.width, drawCanvas.height);
 
 // Scroll buttons
 const step = 200;
@@ -109,9 +107,6 @@ drawCanvas.addEventListener('pointermove', e => {
 
 drawCanvas.addEventListener('pointerup', () => drawing = false);
 drawCanvas.addEventListener('pointercancel', () => drawing = false);
-// ==========================================
-// SAVE TO GOOGLE SHEET
-// ==========================================
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwL3ZqRD4DVjvKAc-qEFdFcl6GGrBcy0EcP9Od7I_LdsItG7LjEu3nbaayeU7lI8_Dm/exec";
 
@@ -144,7 +139,8 @@ document
         }
       });
 
-      const result = await response.json();
+      const result = await response.text();
+      console.log(result);  
 
       alert("Saved successfully!");
 
