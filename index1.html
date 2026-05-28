@@ -109,7 +109,7 @@ drawCanvas.addEventListener('pointerup', () => drawing = false);
 drawCanvas.addEventListener('pointercancel', () => drawing = false);
 
 const SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbyANuPYocQctCUgqIii_QrhcNaXdPKomVLgkBo684jJukMJ1yaQor3uQP9GnObTOCzh/exec";
+  "https://script.google.com/macros/s/AKfycbwwizn6Px-UbwDLTusj_v9bHO1l41H0VoBjs2mEHCasUrf-Pdcre0PcKASJdTPnQ94/exec";
 
 document
   .getElementById("locationForm")
@@ -120,39 +120,39 @@ document
     try {
 
       // Convert canvas to image
-      const drawingData = drawCanvas.toDataURL("image/png",0.7);
+      const drawingData =
+        drawCanvas.toDataURL("image/png");
 
-      // Get input values
-      const location =
-        document.getElementById("location").value;
+      // Create form data
+      const formData = new FormData();
 
-      const view =
-        document.getElementById("viewfinder").value;
+      formData.append("drawing", drawingData);
 
-      const payload = {
-        drawing: drawingData,
-        location: location,
-        view: view
-      };
+      formData.append(
+        "location",
+        document.getElementById("location").value
+      );
 
+      formData.append(
+        "view",
+        document.getElementById("viewfinder").value
+      );
+
+      // Send to Apps Script
       const response = await fetch(SCRIPT_URL, {
         method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
+        body: formData
       });
 
-      // Read response as JSON
+      // Read JSON response
       const result = await response.json();
 
       console.log("Server response:", result);
 
-      // Check for server-side success
-      if (!response.ok || result.success !== true) {
+      // Check success
+      if (result.success !== true) {
         throw new Error(
-          result.error || "Server error"
+          result.error || "Unknown server error"
         );
       }
 
