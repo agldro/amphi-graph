@@ -30,7 +30,7 @@
 
   <div id="footer">
     <p>Step II</p>
-    <a href="index.html">
+    <a href="index1.html">
       <img src="SVG/next.svg" id="back">
     </a>
  </div>
@@ -72,7 +72,7 @@ document.getElementById("takePhoto").onclick = () => {
 
 photo.src = data;
 
-fetch("https://script.google.com/macros/s/AKfycbzGe0_1WHzMLtex_XV8-8NC7jEdTx541YaNYQz6RnX1ZsyC4H23MJK5cxtsBee1Lnu3iw/exec", {
+fetch("https://script.google.com/macros/s/AKfycbyLd8nERSnmkS2Pepj2Emiy3bdA5JpNKFw5_xRG8bUc_NIPQ7xte-ynuUdIth_3HTybYw/exec", {
   method: "POST",
   body: JSON.stringify({
     submissionId: submissionId,
@@ -81,6 +81,7 @@ fetch("https://script.google.com/macros/s/AKfycbzGe0_1WHzMLtex_XV8-8NC7jEdTx541Y
   })
 });
 };
+
 </script>
 
 </body>
