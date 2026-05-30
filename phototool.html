@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping One Long-Long Street</title>
+    <link rel="stylesheet" href="phototool.css" />
+</head>
+
+<body>
+
+<h1 class="justify">Mapping One Long-Long Street</h1>
+<div id="title">
+  <h1>Workshop</h1>
+  <h1>04.07.2026</h1>
+</div>
+
+<video id="video" autoplay playsinline></video>
+
+<div id="center">
+<button id="startCamera">Allow Camera</button>
+<button id="takePhoto">Take Photo</button>
+</div>
+
+<canvas id="canvas" style="display:none"></canvas>
+<img id="photo"><div class="wrap-box">
+
+
+</div>
+
+  <div id="footer">
+    <p>Step II</p>
+    <a href="index.html">
+      <img src="SVG/next.svg" id="back">
+    </a>
+ </div>
+
+<script>
+
+const submissionId =
+  sessionStorage.getItem("submissionId");
+
+const video = document.getElementById("video");
+const canvas = document.getElementById("canvas");
+const photo = document.getElementById("photo");
+
+document.getElementById("startCamera").onclick = async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+      audio: false
+    });
+
+    video.srcObject = stream;
+
+  } catch (err) {
+    alert("Camera access denied or unavailable");
+    console.error(err);
+  }
+};
+
+document.getElementById("takePhoto").onclick = () => {
+
+  const context = canvas.getContext("2d");
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  context.drawImage(video, 0, 0);
+
+ const data = canvas.toDataURL("image/png");
+
+photo.src = data;
+
+fetch("https://script.google.com/macros/s/AKfycbzGe0_1WHzMLtex_XV8-8NC7jEdTx541YaNYQz6RnX1ZsyC4H23MJK5cxtsBee1Lnu3iw/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    submissionId: submissionId,
+    image: data,
+    type: "photo"
+  })
+});
+};
+</script>
+
+</body>
+
+
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapping One Long-Long Street</title>
+    <link rel="stylesheet" href="index1.css" />
+</head>
+<script>
+  if (!sessionStorage.getItem("submissionId")) {
+  sessionStorage.setItem(
+    "submissionId",
+    crypto.randomUUID()
+  );
+}
+</script>
+
+<body>
+
+<h1 class="justify">Mapping One Long-Long Street</h1>
+<div id="title">
+  <h1>Workshop</h1>
+  <h1>04.07.2026</h1>
+</div>
+
+    <button id="clearCanvas"><img src="SVG/back.svg" alt="" width="20"></button>
+
+<div id="viewport">
+  <div id="container">
+    <object id="streetSVG" type="image/svg+xml" data="SVG/street-2.svg"></object>
+    <canvas id="drawCanvas"></canvas>
+  </div>
+</div>
+
+<div id="scrollControls">
+  <img src="SVG/left.svg" id="scrollLeft">
+  <img src="SVG/right.svg" id="scrollRight">
+</div>
+
+  <form id="locationForm">
+  <label id="text" for="location"> → Where are you? How would you describe your location in realtion to the street?</label><br>
+  <input id="location" type="text" name="location"><br>
+  <label id="view" for="viewfinder"> → What do you see through your viewfinder?</label><br>
+  <input id="viewfinder" type="text" name="viewfinder"><br>
+  <button id="save" type="submit">Save location</button>
+</form>
+
+<div id="footer">
+  <p>Step I</p>
+  <a href="phototool.html"><img src="SVG/next.svg" width="20"></a>
+</div>
+
+<script>
+const svgHeight = 400;            // fixed height of the street
+const viewBoxWidth = 326.05;      // your SVG’s original viewBox width
+const viewBoxHeight = 64.1;     // your SVG’s original viewBox height
+const svgWidth = svgHeight * (viewBoxWidth / viewBoxHeight); // compute proportional width
+
+// Get DOM elements
+const container = document.getElementById('container');
+const svgObject = document.getElementById('streetSVG');
+const drawCanvas = document.getElementById('drawCanvas');
+const drawCtx = drawCanvas.getContext('2d');
+const viewport = document.getElementById('viewport');
+
+// Set container and SVG size
+container.style.width  = svgWidth + "px";
+container.style.height = svgHeight + "px";
+
+svgObject.style.width  = svgWidth + "px";
+svgObject.style.height = svgHeight + "px";
+
+// Set canvas to exact same size as SVG
+drawCanvas.width  = svgWidth;
+drawCanvas.height = svgHeight;
+
+
+// Scroll buttons
+const step = 200;
+document.getElementById('scrollRight').onclick = () => {
+  viewport.scrollBy({ left: step, behavior: "smooth" });
+};
+document.getElementById('scrollLeft').onclick = () => {
+  viewport.scrollBy({ left: -step, behavior: "smooth" });
+};
+
+// Drawing
+let drawing = false;
+
+function getPointerPos(e){
+  const rect = drawCanvas.getBoundingClientRect();
+  const scaleX = drawCanvas.width / rect.width;
+  const scaleY = drawCanvas.height / rect.height;
+  return {
+    x: (e.clientX - rect.left) * scaleX,
+    y: (e.clientY - rect.top) * scaleY
+  };
+}
+
+drawCanvas.addEventListener('pointerdown', e => {
+  drawing = true;
+  drawCanvas.setPointerCapture(e.pointerId);
+  const pos = getPointerPos(e);
+  drawCtx.beginPath();
+  drawCtx.moveTo(pos.x, pos.y);
+});
+
+drawCanvas.addEventListener('pointermove', e => {
+  if (!drawing) return;
+  const pos = getPointerPos(e);
+  drawCtx.lineTo(pos.x, pos.y);
+  drawCtx.strokeStyle = "blue";
+  drawCtx.lineWidth = 2;
+  drawCtx.lineCap = "round";
+  drawCtx.stroke();
+});
+
+drawCanvas.addEventListener('pointerup', () => drawing = false);
+drawCanvas.addEventListener('pointercancel', () => drawing = false);
+
+document.getElementById("clearCanvas").addEventListener("click", () => {
+  drawCtx.clearRect(0, 0, drawCanvas.width, drawCanvas.height);
+});
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwwizn6Px-UbwDLTusj_v9bHO1l41H0VoBjs2mEHCasUrf-Pdcre0PcKASJdTPnQ94/exec";
+
+document
+  .getElementById("locationForm")
+  .addEventListener("submit", async function (e) {
+
+    e.preventDefault();
+
+    try {
+
+      // Convert canvas to image
+      const drawingData =
+        drawCanvas.toDataURL("image/png");
+
+      // Create form data
+      const formData = new FormData();
+
+      formData.append("drawing", drawingData);
+
+      formData.append(
+        "location",
+        document.getElementById("location").value
+      );
+
+      formData.append(
+        "view",
+        document.getElementById("viewfinder").value
+      );
+     
+      formData.append(
+      "submissionId",
+      sessionStorage.getItem("submissionId")
+      );
+      // Send to Apps Script
+      const response = await fetch(SCRIPT_URL, {
+        method: "POST",
+        body: formData
+      });
+
+      // Read JSON response
+      const result = await response.json();
+
+      console.log("Server response:", result);
+
+      // Check success
+      if (result.success !== true) {
+        throw new Error(
+          result.error || "Unknown server error"
+        );
+      }
+
+      alert("Saved successfully!");
+
+    } catch (error) {
+
+      console.error("Upload failed:", error);
+
+      alert(
+        "Error saving data: " + error.message
+      );
+
+    }
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+@font-face {
+  font-family: "Mono";
+  src: url("Fonts/IBMPlexMono-Regular.ttf") format("opentype");
+  font-style: normal;
+  font-display: swap;
+}
+
+  body {
+      margin: 0;
+    }
+
+.justify{
+    text-align: justify;
+    width: 95%;
+    height: 0;
+    position:fixed;
+    z-index: 999;
+}
+
+.justify::after{
+    content: "";
+    display: inline-block;
+    width: 100%;
+}
+
+
+h1{
+    font-family: "Mono", serif;
+    font-size: 12px;
+    height: auto;
+    padding-left: 2.5%;
+}
+
+
+#title {
+    padding-top: 20px;
+    width: 97.5vw;
+    display: flex;
+    justify-content:space-between;
+    position: fixed;
+    z-index: 998;
+}
+
+.wrap-box{
+    display: flex; 
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 20px;
+    position: sticky;
+}
+
+button{
+    font-family: "Mono", serif;
+    padding:5px 8px;
+    font-size:12px;
+    background:white;
+    border-radius: 40px;
+    border: 1px solid black;
+    cursor:pointer;
+    width: auto;
+}
+
+#startCamera{
+    margin-right: 5px;
+}
+#center {
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+    margin-bottom: 6%;
+    position: relative
+}
+
+video{
+    width:90%;
+    max-width:500px;
+    border-radius:10px;
+    border: 1px solid black;
+    margin-left: 5%;
+    margin-top: 20%;
+    position: relative;
+}
+
+
+img{
+    margin-top: 6%;
+    width:50%;
+    border-radius:10px;
+    margin-left: 25%;
+    rotate: 8deg;
+}
+
+canvas{
+    margin-top:15px;
+    width:90%;
+    max-width:500px;
+    border-radius:10px;
+    margin-left: 5%;
+}
+
+p {
+    font-family: "Mono", serif;
+    font-size: 13px;
+    margin: 0;
+    height: auto;
+    vertical-align: baseline;
+}
+
+#footer{
+    width: 95%;
+    height: 40px;
+    display: flex;
+    align-items: flex-end; 
+    justify-content:space-between;
+    position: fixed;
+    bottom: 1%;
+    vertical-align: baseline;
+    padding-left: 2.5%;
+}
+
+#back {
+ margin: 0;
+ width: 20px;
+ height: 15px;
+ border-radius: 0;
+ display: block;
+rotate: 0deg;
+}
