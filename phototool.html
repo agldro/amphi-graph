@@ -74,6 +74,9 @@ photo.src = data;
 
 fetch("https://script.google.com/macros/s/AKfycbyLd8nERSnmkS2Pepj2Emiy3bdA5JpNKFw5_xRG8bUc_NIPQ7xte-ynuUdIth_3HTybYw/exec", {
   method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
   body: JSON.stringify({
     submissionId: submissionId,
     image: data,
