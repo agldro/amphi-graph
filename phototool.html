@@ -86,18 +86,16 @@ photo.src = data;
 console.log("rowNumber:", rowNumber);
 console.log("image size:", data.length);
 
+const formData = new FormData();
+
+formData.append("rowNumber", rowNumber);
+formData.append("image", data);
+
 const response = await fetch(
-  "https://script.google.com/macros/s/AKfycbyLd8nERSnmkS2Pepj2Emiy3bdA5JpNKFw5_xRG8bUc_NIPQ7xte-ynuUdIth_3HTybYw/exec",
+  "https://script.google.com/macros/s/AKfycbygYktqJR2ITf-e6fRANIb6smwyrDPpVWDZX2DJTbwcXJ9GPJU4Wnf8dKiYqWLqDEnwiA/exec",
   {
     method: "POST",
-    headers: {
-      "Content-Type":
-        "application/json"
-    },
-    body: JSON.stringify({
-      rowNumber: rowNumber,
-      image: data
-    })
+    body: formData
   }
 );
 
