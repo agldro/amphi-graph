@@ -6,14 +6,7 @@
     <title>Mapping One Long-Long Street</title>
     <link rel="stylesheet" href="index1.css" />
 </head>
-<script>
-  if (!sessionStorage.getItem("submissionId")) {
-  sessionStorage.setItem(
-    "submissionId",
-    crypto.randomUUID()
-  );
-}
-</script>
+
 
 <body>
 
@@ -23,7 +16,7 @@
   <h1>04.07.2026</h1>
 </div>
 
-    <button id="clearCanvas"><img src="SVG/back.svg" alt="" width="20"></button>
+    <button type="button" id="clearCanvas"><img src="SVG/back.svg" alt="" width="20"></button>
 
 <div id="viewport">
   <div id="container">
@@ -165,6 +158,11 @@ document
       // Read JSON response
       const result = await response.json();
 
+      sessionStorage.setItem(
+      "rowNumber",
+      result.rowNumber
+      );
+
       console.log("Server response:", result);
 
       // Check success
@@ -173,8 +171,10 @@ document
           result.error || "Unknown server error"
         );
       }
-
       alert("Saved successfully!");
+
+      window.location.href =
+        "phototool.html";
 
     } catch (error) {
 
