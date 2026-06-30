@@ -69,13 +69,29 @@ drawCanvas.height = svgHeight;
 
 
 // Scroll buttons
-const step = 200;
-document.getElementById('scrollRight').onclick = () => {
-  viewport.scrollBy({ left: step, behavior: "smooth" });
-};
-document.getElementById('scrollLeft').onclick = () => {
-  viewport.scrollBy({ left: -step, behavior: "smooth" });
-};
+const scrollStep = 200;
+
+function scrollViewport(direction) {
+
+    const maxScroll =
+        viewport.scrollWidth - viewport.clientWidth;
+
+    let target =
+        viewport.scrollLeft + direction * scrollStep;
+
+    target = Math.max(0, Math.min(target, maxScroll));
+
+    viewport.scrollTo({
+        left: target,
+        behavior: "smooth"
+    });
+}
+
+document.getElementById("scrollRight").onclick = () =>
+    scrollViewport(1);
+
+document.getElementById("scrollLeft").onclick = () =>
+    scrollViewport(-1);
 
 // Drawing
 let drawing = false;
