@@ -49,7 +49,7 @@ a{
         font-size: 12px;
 }
 
-text{
+#text{
     font-family: "Mono", serif;
     font-size: 12px;
     height: auto;
@@ -82,6 +82,8 @@ button{
     border: 1px solid black;
     cursor:pointer;
     width: auto;
+    display: inline-block;
+    white-space: nowrap;
 }
 
 #save{
