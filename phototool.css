@@ -53,11 +53,12 @@ button{
     font-family: "Mono", serif;
     padding:5px 8px;
     font-size:12px;
-    background:white;
+    background: white;
     border-radius: 40px;
     border: 1px solid black;
     cursor:pointer;
     width: auto;
+    color: black;
 }
 
 #startCamera{
