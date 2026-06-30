@@ -16,11 +16,13 @@
   overflow-y: hidden;
   position: relative;
   border-bottom: 1px solid black;
+  overscroll-behavior: none;
 }
 
         #container {
         position: relative;
         display: inline-block;
+        overflow: hidden;
         }
 
 .justify{
